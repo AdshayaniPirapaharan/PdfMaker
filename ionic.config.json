@@ -1,0 +1,7 @@
+{
+  "name": "pdfmaker",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
