@@ -18,7 +18,6 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export class HomePage implements OnInit {
    myForm: FormGroup;
    pdfObj = null;
-   base64Image = null;
    photoPreview = null;
    logoData = null;
 
@@ -36,7 +35,7 @@ export class HomePage implements OnInit {
    }
 
    loadLocalAssetToBase64(){
-     this.http.get('',{ responseType: 'blob'})
+     this.http.get('./assets/1200px-Wabtec_Logo.svg.png',{ responseType: 'blob'})
      .subscribe(res=> {
        const reader = new FileReader();
        reader.onloadend = () => {
@@ -49,16 +48,34 @@ export class HomePage implements OnInit {
      
 
    }
+
+   async takePicture(){
+     const image = await Camera.getPhoto({
+       quality: 100,
+       allowEditing: false,
+       resultType: CameraResultType.Base64,
+       source: CameraSource.Camera
+     });
+     console.log('image');
+    
+     this.photoPreview = 'data:1200px-Wabtec_Logo.svg.png;base64,${image.base64String}';
+   }
    createPdf() {
      const formValue = this.myForm.value;
+     const image = this.photoPreview ? {image:this.photoPreview, width:300} : {};
+     let logo ={};
+     if(formValue.showLogo){
+       logo ={image: this.logoData, width:100}
+     }
 
      const docDefinition = {
-       watermark: { text: 'Ionic Academy', color: 'blue', opacity: 0.2, bold:true},
+       watermark: { text: 'M.A.R.T.I.S', color: 'blue', opacity: 0.2, bold:true},
        content: [
         {
           columns: [
+            logo,
              {
-               text: new Date().toTimeString(),
+               text: new Date(),
                alignemnet: 'right'
              }
 
@@ -89,7 +106,9 @@ export class HomePage implements OnInit {
             text: formValue.to
           }
         ]
-      }
+      },
+      image,
+      {text: formValue.text, margin:[0,20,0,20]},
 
       ],
        styles: {

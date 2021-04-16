@@ -26,7 +26,11 @@
     <ion-label position="stacked">to</ion-label>
     <ion-input formControlName="to"></ion-input>
   </ion-item>
-  <ion-button expand="full" (click)="createPdf()" >Create PDF</ion-button>
+  <ion-item>
+    <ion-label position="stacked">Body</ion-label>
+    <ion-input formControlName="text"></ion-input>
+  </ion-item>
+  
   <ion-button expand="full" (click)="downloadPdf()" type="submit">Download PDF</ion-button>
   <ion-button expand="full" (click)="sharePdf()" type="submit">Share PDF</ion-button>
 
