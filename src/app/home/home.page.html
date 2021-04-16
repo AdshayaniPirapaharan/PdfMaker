@@ -9,12 +9,29 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">PDF Generator</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+  <form (ngSubmit)="createPdf()" [formGroup]="myForm">
+  <ion-item>
+    <ion-label>Include Image</ion-label>
+    <ion-checkbox formControlName="showLogo" slot="start"></ion-checkbox>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">From</ion-label>
+    <ion-input formControlName="from"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">to</ion-label>
+    <ion-input formControlName="to"></ion-input>
+  </ion-item>
+  <ion-button expand="full" (click)="createPdf()" >Create PDF</ion-button>
+  <ion-button expand="full" (click)="downloadPdf()" type="submit">Download PDF</ion-button>
+  <ion-button expand="full" (click)="sharePdf()" type="submit">Share PDF</ion-button>
+
+
+
+  </form>
+
+  </ion-content>
